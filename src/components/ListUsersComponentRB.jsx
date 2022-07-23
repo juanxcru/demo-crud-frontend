@@ -16,9 +16,10 @@ class ListUsersComponentRB extends Component {
   render() {
     return (
       <div>
-     <br />
+
+        <div className="container" >
         <h2 className="text-center" > Lista de Usuarios </h2>
-        <br />
+        </div>
     
         <Table responsive striped bordered hover variant="dark">
           <thead>
