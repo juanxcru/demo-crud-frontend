@@ -1,27 +1,43 @@
 import React, { Component } from "react";
+import history from "../services/history.js";
+import Button from "react-bootstrap/esm/Button";
 import Table from "react-bootstrap/table";
 import UserService from "../services/UserService";
+import Stack from 'react-bootstrap/Stack';
 
 class ListUsersComponentRB extends Component {
   constructor(props) {
+    
     super(props);
 
     this.state = {
       users: [],
     };
+    this.addUser = this.addUser.bind(this);
   }
   componentDidMount() {
-    UserService.getUsers().then((res) => this.setState({ users: res.data })); // devuelve el promise
+    UserService.getUsers().then((res) => this.setState({ users: res.data })); // devuelve el promise desde el servicio get
   }
+
+  addUser() {
+
+    history.push(`/crear-usuario`);
+  }
+
   render() {
     return (
-      <div>
+      <div className="container-fluid">
 
-        <div className="container" >
-        <h2 className="text-center" > Lista de Usuarios </h2>
+        <div className="container-fluid" >
+          <h2 className="text-center mt-3" > Lista de Usuarios </h2>
         </div>
-    
-        <Table responsive striped bordered hover variant="dark">
+        <div className="container-fluid">
+            <Button variant="outline-dark" onClick={this.addUser} >Agregar Usuario </Button>{''}
+            <br/>
+            <br />
+        </div> 
+
+        <Table  responsive striped bordered hover variant="dark">
           <thead>
             <tr>
               <th>ID</th>
@@ -42,7 +58,12 @@ class ListUsersComponentRB extends Component {
                 <td>{users.apellido}</td>
                 <td>{users.email}</td>
                 <td>{users.edad}</td>
-                <td></td>
+                <td>
+                  <Stack direction="horizontal"> 
+                  <Button className="mx-auto px-3" variant="outline-light" onClick={() => history.push(`/editar-usuario/${users.id}`)}>Editar</Button>{' '}
+                  <Button className="mx-auto px-3" variant="outline-danger" onClick={() => history.push(`/editar-usuario/${users.id}`)}>Borrar</Button>{' '}
+                  </Stack>
+                </td>
               </tr>
             ))}
           </tbody>
